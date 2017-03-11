@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Auth::routes();
+
+
+Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
+    Route::get('/', ['as'=>'home.index', 'uses'=>'HomeController@index']);
 });
