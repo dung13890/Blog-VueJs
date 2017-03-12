@@ -1,0 +1,35 @@
+{
+  "name": "blog",
+  "description": "laravel and Vuejs",
+  "main": "Laravel mix",
+  "authors": [
+    "Mr Dung <dung13890@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "daoanhdung"
+  ],
+  "homepage": "https://github.com/dung13890/Blog-VueJs",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "components-font-awesome": "^4.7.0",
+    "AdminLTE": "adminlte#^2.3.11",
+    "jqTree": "jqtree#^1.3.7",
+    "sweetalert": "^1.1.3",
+    "animate.css": "^3.5.2",
+    "jquery-slimscroll": "^1.3.8",
+    "datatables.net": "^2.1.1",
+    "datatables.net-bs": "^2.1.1",
+    "toastr": "^2.1.3",
+    "bootstrap-toggle": "^2.2.2",
+    "jasny-bootstrap": "^3.1.3",
+    "summernote": "^0.8.2"
+  }
+}

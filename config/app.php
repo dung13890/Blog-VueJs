@@ -166,6 +166,11 @@ return [
         /*
          * Package Service Providers...
          */
+        Collective\Html\HtmlServiceProvider::class,
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Spatie\Activitylog\ActivitylogServiceProvider::class,
+        Silber\Bouncer\BouncerServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
@@ -225,6 +230,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'HTML' => Collective\Html\HtmlFacade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Activity' => Spatie\Activitylog\ActivitylogFacade::class,
+        'Datatables' => yajra\Datatables\Datatables::class,
+        'Bouncer' => Silber\Bouncer\BouncerFacade::class,
 
     ],
 
