@@ -27,5 +27,14 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Lord\Laroute\LarouteServiceProvider::class);
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
         }
+
+        $this->composers();
+    }
+
+    public function composers()
+    {
+        view()->composer('backend.*', function ($view) {
+            $view->with('me', \Auth::guard('backend')->user());
+        });
     }
 }

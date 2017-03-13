@@ -7,6 +7,7 @@
 /resources/assets/bower
 /vendor
 /.idea
+/resource/assets/js/laroute.js
 Homestead.json
 Homestead.yaml
 .env

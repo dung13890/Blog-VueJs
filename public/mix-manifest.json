@@ -1,8 +1,9 @@
 {
   "/assets/vue/frontend/app.js": "/assets/vue/frontend/app.js",
-  "/assets/vue/frontend/vendor.js": "/assets/vue/frontend/vendor.js",
-  "/assets/js/backend/app.js": "/assets/js/backend/app.js",
   "/assets/css/backend/app.css": "/assets/css/backend/app.css",
   "/assets/css/frontend/app.css": "/assets/css/frontend/app.css",
-  "/assets/vue/frontend/manifest.js": "/assets/vue/frontend/manifest.js"
+  "/assets/vue/frontend/vendor.js": "/assets/vue/frontend/vendor.js",
+  "/assets/vue/frontend/manifest.js": "/assets/vue/frontend/manifest.js",
+  "/assets/js/backend/app.js": "/assets/js/backend/app.js",
+  "/assets/css/backend/plugins.css": "/assets/css/backend/plugins.css"
 }

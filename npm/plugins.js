@@ -51,11 +51,25 @@ var plugins = {
   ],
   scripts: [
     {
-      in: 'backend/app.js',
+      in: [
+        'laroute.js',
+        'backend/app.js'
+      ],
       out: 'backend/app.js'
     }
   ],
   styles: [
+    {
+      in: [
+        'sweetalert/dist/sweetalert.css',
+        'animate.css/animate.min.css',
+        'toastr/toastr.min.css',
+        'bootstrap-toggle/css/bootstrap-toggle.min.css'
+      ],
+      out: 'backend/plugins.css'
+    }
+  ],
+  sass: [
     {
       in: 'backend/app.scss',
       out: 'backend/app.css'

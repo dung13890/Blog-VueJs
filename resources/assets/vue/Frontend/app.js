@@ -20,7 +20,11 @@ import routes from './routes'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  routes
+  routes,
+  history: true,
+  hashbang: false,
+  mode: 'history',
+  linkActiveClass: 'active'
 })
 
 const app = new Vue({

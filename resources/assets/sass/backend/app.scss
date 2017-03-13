@@ -1,9 +1,5 @@
-
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
-// Variables
-@import "variables";
-
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "/vendor/bootstrap/css/bootstrap.min.css";
+@import "/vendor/font-awesome/css/font-awesome.min.css";
+@import "/vendor/adminlte/css/AdminLTE.min.css";
+@import "/vendor/adminlte/css/skins/skin-blue.min.css";
+@import "/assets/css/backend/plugins.css";
