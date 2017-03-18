@@ -16,17 +16,35 @@
 ```sh
 $ git clone git@github.com:dung13890/Blog-VueJs.git
 $ composer install --no-scripts
-$ cp .env.example .env
-$ php artisan key:generate
-$ php artisan migrate:refresh --seed
 $ npm install
 $ bower install
+$ php artisan key:generate
+$ cp .env.example .env
+```
+
+## Create Database 
+
+```sh
+$ mysql -u username -psecret
+
+mysql> create database laravel_blog;
+mysql> exit;
+```
+## Config environment
+
+Change DB_DATABASE, DB_USERNAME and DB_PASSWORD
+
+## Start production
+
+```sh
+$ php artisan migrate:refresh --seed
 $ npm run production
 ```
 
-## Dev
+## Start Dev
 
 ```sh
+$ php artisan migrate:refresh --seed
 $ npm run dev or $ npm run watch
 ```
 

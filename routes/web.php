@@ -12,9 +12,15 @@
 */
 
 
-Auth::routes();
 
 
 Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
     Route::get('/', ['as'=>'home.index', 'uses'=>'HomeController@index']);
+});
+
+Route::group(['namespace' => 'Backend'], function () {
+    Auth::routes();
+    Route::group(['prefix' => 'backend', 'middleware' => ['auth']], function () {
+        Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+    });
 });

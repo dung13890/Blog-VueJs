@@ -5,6 +5,10 @@ var config = {
       out: 'public/assets/js'
     },
     styles: {
+      in: 'resources/assets/bower',
+      out: 'public/assets/css'
+    },
+    sass: {
       in: 'resources/assets/sass',
       out: 'public/assets/css'
     },
