@@ -54,4 +54,19 @@ abstract class AbstractController extends Controller
     {
         return property_exists($this, 'guard') ? $this->guard : null;
     }
+
+    public function before($action, $object = null, $abort = true)
+    {
+        $action = in_array($action, ['index','show']) ? 'read' : 'write';
+        
+        if ($object == null) {
+            $object = $this->repository->model();
+        }
+
+        if (!$this->user || $this->user->cannot($action, $object)) {
+            return ($abort) ? abort(403, $this->trans('forbidden_to_perform', ['action' => $action])) : false;
+        }
+
+        return true;
+    }
 }

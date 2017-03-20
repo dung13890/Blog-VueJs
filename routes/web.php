@@ -20,7 +20,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
 
 Route::group(['namespace' => 'Backend'], function () {
     Auth::routes();
-    Route::group(['prefix' => 'backend', 'middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth']], function () {
         Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+        Route::resource('user', 'UserController');
     });
 });

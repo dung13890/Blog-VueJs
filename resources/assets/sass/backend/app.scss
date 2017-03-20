@@ -3,3 +3,39 @@
 @import "/vendor/adminlte/css/AdminLTE.min.css";
 @import "/vendor/adminlte/css/skins/skin-blue.min.css";
 @import "/assets/css/backend/plugins.css";
+
+@mixin transform($args) {
+  -webkit-transform: $args;
+  -moz-transform: $args;
+  -ms-transform: $args;
+  -o-transform: $args;
+  transform: $args;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    @include transform(translate3d(0,-20%,0));
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    @include transform(translate3d(0, 20%,0));
+  }
+}
+
+.btn-group-sm>.btn, .btn-sm, .btn {
+  border-radius:0;
+}
+
+@media (max-width: 767px) {
+  .table-responsive {
+    border:none;
+  }
+  div.dataTables_wrapper {
+    div.dataTables_length, div.dataTables_filter {
+      text-align:left !important;
+    }
+  }
+}

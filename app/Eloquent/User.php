@@ -4,6 +4,7 @@ namespace App\Eloquent;
 
 use Illuminate\Notifications\Notifiable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -27,6 +28,29 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('id', function (Builder $builder) {
+            $builder->where('id', '>', 1);
+        });
+    }
+
+    public function scopeByKeyword($query, $keyword)
+    {
+        return $query->where('name', 'LIKE', "{$keyword}%")
+            ->orWhere('username', 'LIKE', "{$keyword}%")
+            ->orWhere('email', 'LIKE', "{$keyword}%");
+    }
+
+    public function scopeByRole($query, $role)
+    {
+        return $query->whereHas('roles', function ($query) use ($role) {
+            return $query->where('id', $role);
+        });
+    }
 
     public function setPasswordAttribute($value)
     {

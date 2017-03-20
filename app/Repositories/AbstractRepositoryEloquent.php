@@ -21,4 +21,9 @@ abstract class AbstractRepositoryEloquent
 
         return $this;
     }
+
+    public function datatables($columns = ['*'], $with = [])
+    {
+        return $this->model()->select($columns)->with($with);
+    }
 }
