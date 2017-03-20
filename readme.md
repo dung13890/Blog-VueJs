@@ -15,6 +15,7 @@
 
 ```sh
 $ git clone git@github.com:dung13890/Blog-VueJs.git
+$ cd Blog-VueJs
 $ composer install --no-scripts
 $ npm install
 $ bower install
@@ -31,6 +32,7 @@ mysql> create database laravel_blog;
 mysql> exit;
 ```
 ## Config environment
+$ vim .env
 
 Change DB_DATABASE, DB_USERNAME and DB_PASSWORD
 

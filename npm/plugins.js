@@ -53,6 +53,11 @@ var plugins = {
     {
       in: [
         'laroute.js',
+        '../bower/AdminLTE/dist/js/app.min.js',
+        '../bower/jquery-slimscroll/jquery.slimscroll.min.js',
+        '../bower/sweetalert/dist/sweetalert.min.js',
+        '../bower/toastr/toastr.min.js',
+        '../bower/bootstrap-toggle/js/bootstrap-toggle.min.js',
         'backend/app.js'
       ],
       out: 'backend/app.js'
