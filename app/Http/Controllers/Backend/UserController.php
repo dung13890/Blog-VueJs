@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Contracts\Repositories\UserRepository;
+use Yajra\Datatables\Engines\EloquentEngine;
 use Illuminate\Http\Request;
 use Silber\Bouncer\Bouncer;
 
@@ -25,16 +26,13 @@ class UserController extends BackendController
         $this->compacts['roles'] = $this->roles;
 
         if ($request->ajax() && $request->has('datatables')) {
-            $datatables = \Datatables::of($this->repository->datatables($this->dataSelect))
-                ->filter(function ($query) use ($request) {
-                    if ($request->has('keyword')) {
-                        $query->byKeyword($request->keyword);
-                    }
-
-                    if ($request->has('role_id') && $roleId = $request->role_id) {
-                        $query->byRole($request->role_id);
-                    }
-                });
+            $params = $request->all();
+            $datatables = \Datatables::of($this->repository->datatables($this->dataSelect));
+            $this->filterDatatable($datatables, $params, function ($query, $params) {
+                if (array_has($params, 'role_id') && $params['role_id']) {
+                    $query->byRole($params['role_id']);
+                }
+            });
                 
             return $this->columnDatatable($datatables)->make(true);
         }

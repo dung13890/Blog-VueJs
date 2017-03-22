@@ -24,6 +24,18 @@ abstract class BackendController extends AbstractController
         return view($this->prefix . $view, $compacts);
     }
 
+    public function filterDatatable(EloquentEngine $datatables, array $params, callable $callback = null)
+    {
+        return $datatables->filter(function ($query) use ($params, $callback) {
+            if (array_has($params, 'keyword')) {
+                $query->byKeyword($params['keyword']);
+            }
+            if (is_callable($callback)) {
+                call_user_func_array($callback, [$query, $params]);
+            }
+        });
+    }
+
     public function columnDatatable(EloquentEngine $datatable)
     {
         return $datatable->addColumn('actions', function ($item) {
