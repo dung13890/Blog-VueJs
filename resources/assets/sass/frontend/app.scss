@@ -1,0 +1,6 @@
+@import './partials/reset';
+@import "node_modules/bourbon/app/assets/stylesheets/bourbon";
+@import "node_modules/bourbon-neat/core/neat";
+@import './partials/variables'; // colors, fonts etc...
+@import './partials/mixins'; // custom mixins
+@import './partials/layout'; // responsive grid and media queries
