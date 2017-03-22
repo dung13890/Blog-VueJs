@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Contracts\Repositories\UserRepository;
-use Yajra\Datatables\Engines\EloquentEngine;
 use Illuminate\Http\Request;
 use Silber\Bouncer\Bouncer;
 
@@ -38,5 +37,10 @@ class UserController extends BackendController
         }
 
         return $this->viewRender();
+    }
+
+    public function destroy($id)
+    {
+        return $this->deleteData($id);
     }
 }

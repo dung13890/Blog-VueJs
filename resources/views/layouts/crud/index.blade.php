@@ -17,7 +17,7 @@
         name: 'name',
         targets: "name",
         render: function(data, type, row) {
-            return row.actions.show ? '<a href="' + row.actions.show.uri + '">'+ row.actions.show.label +'</a>' : row.name;
+            return row.actions.show ? '<a href="' + row.actions.show.uri + '">'+ row.name +'</a>' : row.name;
         }
     });
     columns.push({
@@ -58,7 +58,7 @@
                 <div class="box-header with-border">
                     <div class="pull-left">
                         <div class="pull-right">
-                            <a href="javascript:;" data-toggle="collapse" data-target="#filter" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Tìm nâng cao</a>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#filter" class="btn btn-primary btn-sm"><i class="fa fa-arrow-down"></i> Tìm nâng cao</a>
                         </div>
                     </div>
                     @if (Route::has("backend.{$resource}.create"))
