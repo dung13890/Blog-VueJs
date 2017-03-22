@@ -92,13 +92,14 @@ var CRUD = (function () {
 
       var callback = function () {
         _$.post(href, {_method: 'DELETE'}, function() {})
-        .done(function () {
-          $this.closest('tr').fadeOut(400, function(data) {
+        .done(function (data) {
+          toastr.success(data.message);
+          $this.closest('tr').fadeOut(400, function() {
             $this.remove();
           });
-          toastr.success(data.message)
         })
         .fail(function(xhr) {
+          console.log(xhr);
           if (xhr && xhr.responseJSON) {
             return toastr.error(xhr.responseJSON.message);
           }
@@ -114,7 +115,6 @@ var CRUD = (function () {
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Chắc chắn!",
         cancelButtonText: "Hủy",
-        closeOnConfirm: false
       }, function() {
         return callback();
       });

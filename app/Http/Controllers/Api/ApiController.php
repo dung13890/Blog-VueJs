@@ -12,7 +12,7 @@ abstract class ApiController extends AbstractController
 
     protected $dataSelect = ['*'];
 
-    public function jsonRender($data = [])
+    protected function jsonRender($data = [])
     {
         $this->compacts['message'] = [
             'code' => 200,

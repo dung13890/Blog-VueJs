@@ -16,7 +16,12 @@ abstract class BackendController extends AbstractController
 
     protected $dataSelect = ['*'];
 
-    public function viewRender($data = [], $view = null)
+    protected $e = [
+        'code' => 0,
+        'message' => null,
+    ];
+
+    protected function viewRender($data = [], $view = null)
     {
         $view = $view ?: $this->view;
         $compacts = array_merge($data, $this->compacts);
@@ -24,7 +29,7 @@ abstract class BackendController extends AbstractController
         return view($this->prefix . $view, $compacts);
     }
 
-    public function filterDatatable(EloquentEngine $datatables, array $params, callable $callback = null)
+    protected function filterDatatable(EloquentEngine $datatables, array $params, callable $callback = null)
     {
         return $datatables->filter(function ($query) use ($params, $callback) {
             if (array_has($params, 'keyword')) {
@@ -36,7 +41,7 @@ abstract class BackendController extends AbstractController
         });
     }
 
-    public function columnDatatable(EloquentEngine $datatable)
+    protected function columnDatatable(EloquentEngine $datatable)
     {
         return $datatable->addColumn('actions', function ($item) {
             $actions = [];
@@ -61,6 +66,24 @@ abstract class BackendController extends AbstractController
 
             return $actions;
         });
+    }
+
+    protected function deleteData($id)
+    {
+        try {
+            $entity = $this->repository->findOrFail($id);
+            $this->before('delete', $entity);
+            $this->repository->remove($entity);
+            $this->e['message'] = $this->trans('object_deleted_successfully');
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            $this->e['code'] = $e->getCode();
+            $this->e['message'] = $this->trans('object_deleted_unsuccessfully');
+            
+            return response()->json($this->e, 400);
+        }
+
+        return response()->json($this->e);
     }
 
     public function index(Request $request)
