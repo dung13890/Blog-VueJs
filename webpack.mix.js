@@ -1,4 +1,5 @@
 const { mix } = require('laravel-mix');
+const webpack = require('webpack');
 
 var del = require('del');
 var path = require('path');
