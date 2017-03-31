@@ -18,7 +18,7 @@
 
 @push('index-table-filter')
     @component('backend._partials.components.filter')
-        @slot('slot')
+        @slot('filter_fields')
         <div class="col-sm-2">
             <div class="form-group">
                 {{ Form::select('role', $roles, null, ['class' => 'form-control']) }}

@@ -68,15 +68,40 @@ abstract class BackendController extends AbstractController
         });
     }
 
-    protected function deleteData($id)
+    protected function storeData(array $data, $redirect = null, callable $callback = null)
     {
+        \DB::beginTransaction();
+        try {
+            $entity = $this->repository->store($data);
+            $this->e['message'] = $this->trans('object_created_successfully');
+            \DB::commit();
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            \DB::rollBack();
+            $this->e['code'] = 100;
+            $this->e['message'] = $this->trans('object_created_unsuccessfully');
+        }
+        $redirect = $redirect ?: route($this->prefix . $this->repositoryName . '.index');
+        
+        if (is_callable($callback)) {
+            call_user_func_array($callback, [$item]);
+        }
+
+        return redirect($redirect)->with('flash_message', json_encode($this->e, true));
+    }
+
+    protected function deleteData($id, $policy = true)
+    {
+        \DB::beginTransaction();
         try {
             $entity = $this->repository->findOrFail($id);
             $this->before('delete', $entity);
             $this->repository->remove($entity);
             $this->e['message'] = $this->trans('object_deleted_successfully');
+            \DB::commit();
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
+            \DB::rollBack();
             $this->e['code'] = $e->getCode();
             $this->e['message'] = $this->trans('object_deleted_unsuccessfully');
             
@@ -90,6 +115,13 @@ abstract class BackendController extends AbstractController
     {
         $this->view = $this->repositoryName . '.index';
         $this->compacts['heading'] = $this->trans('object.index');
+        $this->compacts['resource'] = $this->repositoryName;
+    }
+
+    public function create()
+    {
+        $this->view = $this->repositoryName.'.create';
+        $this->compacts['heading'] = $this->trans('object.create');
         $this->compacts['resource'] = $this->repositoryName;
     }
 

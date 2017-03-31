@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+use App\Contracts\Services\MediaInterface;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,11 @@
 
 
 
+Route::get('image/{path}', ['as' => 'image' , function (Request $request, MediaInterface $service, $path) {
+    $params = $request->all();
+
+    return $service->getImageResponse($path, $params);
+}])->where('path', '(.*?)');
 
 Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
     Route::get('/', ['as'=>'home.index', 'uses'=>'HomeController@index']);

@@ -2,10 +2,13 @@
 
 namespace App\Repositories;
 
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Eloquent\User;
 
 abstract class AbstractRepositoryEloquent
 {
+    use DispatchesJobs;
+    
     protected $user;
 
     abstract public function model();

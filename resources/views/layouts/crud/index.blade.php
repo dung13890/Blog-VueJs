@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('title', isset($heading) ? $heading : 'Index')
+@section('title', isset($heading) ? $heading : __('repositories.index'))
 
 @push('prestyles')
 {{ HTML::style('vendor/datatables-bs/css/dataTables.bootstrap.min.css') }}
@@ -10,8 +10,9 @@
 {{ HTML::script("vendor/datatables/js/jquery.dataTables.min.js") }}
 {{ HTML::script("vendor/datatables-bs/js/dataTables.bootstrap.min.js") }}
 <script>
-    var flash_message = '{{ session("flash_message") }}';
+    var flash_message = '{!! session("flash_message") !!}';
     var crud = new CRUD("{{ $resource }}", {});
+    crud.flash(flash_message);
     columns.splice(1, 0, {
         data: 'name',
         name: 'name',
@@ -24,7 +25,7 @@
         data: 'locked',
         name: 'locked',
         render: function (data, type, row) {
-            return row.locked ? '<span class="label label-primary">Actived</span>' : '<span class="label label-danger">Locked</span>';
+            return row.locked == 0 ? '<span class="label label-primary">Actived</span>' : '<span class="label label-danger">Locked</span>';
         }
     });
     crud.setDatatables(columns, searches).index();
@@ -45,10 +46,10 @@
 
 @section('page-content')
 <section class="content-header">
-    <h1>{{ $heading or 'Index' }} </h1>
+    <h1>{{ $heading or __('repositories.index') }} </h1>
     <ol class="breadcrumb">
-        <li><a href="{{ route('backend.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">{{ $heading or 'Index' }}</li>
+        <li><a href="{{ route('backend.dashboard') }}"><i class="fa fa-dashboard"></i> {{ __('repositories.dashboard') }}</a></li>
+        <li class="active">{{ $heading or __('repositories.index') }}</li>
     </ol>
 </section>
 <div class="content animated fadeInUp">
@@ -58,13 +59,13 @@
                 <div class="box-header with-border">
                     <div class="pull-left">
                         <div class="pull-right">
-                            <a href="javascript:;" data-toggle="collapse" data-target="#filter" class="btn btn-primary btn-sm"><i class="fa fa-arrow-down"></i> Tìm nâng cao</a>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#filter" class="btn btn-primary btn-sm"><i class="fa fa-arrow-down"></i> {{ __('repositories.filter') }}</a>
                         </div>
                     </div>
                     @if (Route::has("backend.{$resource}.create"))
                     @can ("{$resource}-write")
                     <div class="pull-right">
-                        <a href='{{ route("backend.{$resource}.create") }}' class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create</a>
+                        <a href='{{ route("backend.{$resource}.create") }}' class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> {{ __('repositories.create') }}</a>
                     </div>
                     @endcan
                     @endif
