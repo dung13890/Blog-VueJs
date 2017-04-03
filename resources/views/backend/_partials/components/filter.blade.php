@@ -11,12 +11,12 @@
             </div>
         </div>
 
-        {{ $slot }}
+        {{ $filter_fields }}
 
         <div class="col-sm-4">
             <div class="form-group">
-                <a id="search" href="#" class="btn btn-primary"><i class="fa fa-search"></i> Search</a>
-                <a id="reset" href="#" class="btn btn-default"><i class="fa fa-refresh"></i> Reset</a>
+                <a id="search" href="#" class="btn btn-primary"><i class="fa fa-search"></i> {{ __('repositories.search') }}</a>
+                <a id="reset" href="#" class="btn btn-default"><i class="fa fa-refresh"></i> {{ __('repositories.reset') }}</a>
             </div>
         </div>
     </div>

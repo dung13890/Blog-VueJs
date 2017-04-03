@@ -54,7 +54,7 @@ var CRUD = (function () {
       render: function (data, type, row) {
         var actions = {
           edit: function () {
-            return row.actions.show ? '<a href="' + row.actions.show.uri + '" title="' + row.actions.show.label + '" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>' : '';
+            return row.actions.edit ? '<a href="' + row.actions.edit.uri + '" title="' + row.actions.edit.label + '" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>' : '';
           },
           delete: function () {
             return row.actions.delete ? '<a href="' + row.actions.delete.uri + '" title="' + row.actions.delete.label + '" class="btn btn-danger btn-xs delete-action"><i class="fa fa-times"></i></a>' : '';
@@ -140,6 +140,13 @@ var CRUD = (function () {
     }
   };
 
+  CRUD.prototype.flash = function (message) {
+    if (typeof message !== 'undefined' && message) {
+      var e = JSON.parse(message);
+      e.code == 0 ? toastr.success(e.message) : toastr.error(e.message);
+    }
+  }
+
   return CRUD;
 })();
 
@@ -151,26 +158,6 @@ var CRUD = (function () {
 
 
 jQuery(document).ready(function($) {
-    if (typeof flash_message !== 'undefined' && flash_message) {
-        var e = JSON.parse(flash_message);
-        toastr.options = {
-            "closeButton": true,
-            "debug": true,
-            "progressBar": false,
-            "preventDuplicates": true,
-            "positionClass": "toast-top-right",
-            "onclick": null,
-            "showDuration": "400",
-            "hideDuration": "600",
-            "timeOut": "2000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-        e.code == 0 ? toastr.success(e.message) : toastr.error(e.message);
-    }
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -180,22 +167,6 @@ jQuery(document).ready(function($) {
         height: 300
     });
 });
-       
-function alertDestroy(route) {
-    swal({
-        title: "Bạn chắc chắn chứ?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Chắc chắn!",
-        cancelButtonText: "Hủy",
-        closeOnConfirm: false
-    }, function() {
-        $.post(route, {_method: 'DELETE'}, function (data) {
-            window.location.reload();
-        });
-    });
-};
 
 function treeInit(items, options, drag, selector) {
     var items = items || [];

@@ -19,8 +19,8 @@ $ cd Blog-VueJs
 $ composer install --no-scripts
 $ npm install
 $ bower install
-$ php artisan key:generate
 $ cp .env.example .env
+$ php artisan key:generate
 ```
 
 ## Create Database 

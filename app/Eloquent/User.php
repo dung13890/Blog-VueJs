@@ -6,10 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Traits\ImagableTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRolesAndAbilities;
+    use Notifiable, HasRolesAndAbilities, ImagableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'locked'
+        'name', 'username', 'email', 'password', 'locked', 'image'
     ];
 
     /**
