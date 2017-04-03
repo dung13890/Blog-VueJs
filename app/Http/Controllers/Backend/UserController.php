@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Contracts\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use App\Jobs\User\StoreJob;
+use App\Jobs\User\UpdateJob;
+use App\Jobs\User\DeleteJob;
 use Silber\Bouncer\Bouncer;
 
 class UserController extends BackendController
@@ -54,7 +57,9 @@ class UserController extends BackendController
         $this->validate($request, $this->repository->validation('store'));
         $data = $request->all();
 
-        return $this->storeData($data);
+        return $this->doRequest(function () use ($data) {
+            return $this->dispatch(new StoreJob($data));
+        }, 'created');
     }
 
     public function edit($id)
@@ -66,8 +71,30 @@ class UserController extends BackendController
         return $this->viewRender();
     }
 
+    public function update(Request $request, $id)
+    {
+        $item = $this->repository->findOrFail($id);
+        $this->before(__FUNCTION__, $item);
+        
+        if (!$request->has('password')) {
+            $request->replace($request->except(['password', 'password_confirmation']));
+        }
+        
+        $this->validate($request, $this->repository->validation('update', $item));
+        $data = $request->all();
+
+        return $this->doRequest(function () use ($item, $data) {
+            return $this->dispatch(new UpdateJob($item, $data));
+        }, 'updated');
+    }
+
     public function destroy($id)
     {
-        return $this->deleteData($id);
+        $item = $this->repository->findOrFail($id);
+        $this->before(__FUNCTION__, $item);
+
+        return $this->doRequest(function () use ($item) {
+            return $this->dispatch(new DeleteJob($item));
+        }, 'deleted');
     }
 }

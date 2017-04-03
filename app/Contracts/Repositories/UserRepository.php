@@ -7,7 +7,4 @@ use App\Contracts\Traits\ValidatableInterface;
 
 interface UserRepository extends ValidatableInterface
 {
-    public function remove(User $user);
-
-    public function store(array $attributes);
 }
