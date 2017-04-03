@@ -32,9 +32,11 @@ class StoreJob
     {
         $path = strtolower(class_basename($repository->model()));
         $data = array_only($this->attributes, $repository->getFillable());
+        
         if (array_has($data, 'image')) {
             $data['image'] = $this->uploadFile($data['image'], $path);
         }
+        
         $user = $repository->create($data);
         $user->roles()->sync($this->attributes['role_ids']);
 

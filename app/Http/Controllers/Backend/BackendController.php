@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AbstractController;
 use Yajra\Datatables\Engines\EloquentEngine;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 abstract class BackendController extends AbstractController
 {
+    use DispatchesJobs;
+
     protected $guard = 'backend';
 
     protected $prefix = 'backend.';
@@ -68,47 +71,29 @@ abstract class BackendController extends AbstractController
         });
     }
 
-    protected function storeData(array $data, $redirect = null, callable $callback = null)
+    protected function doRequest(callable $callback, $action, $redirect = null)
     {
         \DB::beginTransaction();
         try {
-            $entity = $this->repository->store($data);
-            $this->e['message'] = $this->trans('object_created_successfully');
+            if (is_callable($callback)) {
+                call_user_func_array($callback, []);
+            }
+            $this->e['message'] = $this->trans("object_{$action}_successfully");
             \DB::commit();
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             \DB::rollBack();
             $this->e['code'] = 100;
-            $this->e['message'] = $this->trans('object_created_unsuccessfully');
+            $this->e['message'] = $this->trans("object_{$action}_unsuccessfully");
         }
+
+        if (\Request::ajax()) {
+            return ($this->e['code'] == 0) ? response()->json($this->e) : response()->json($this->e, 400);
+        }
+
         $redirect = $redirect ?: route($this->prefix . $this->repositoryName . '.index');
-        
-        if (is_callable($callback)) {
-            call_user_func_array($callback, [$item]);
-        }
 
         return redirect($redirect)->with('flash_message', json_encode($this->e, true));
-    }
-
-    protected function deleteData($id, $policy = true)
-    {
-        \DB::beginTransaction();
-        try {
-            $entity = $this->repository->findOrFail($id);
-            $this->before('delete', $entity);
-            $this->repository->remove($entity);
-            $this->e['message'] = $this->trans('object_deleted_successfully');
-            \DB::commit();
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            \DB::rollBack();
-            $this->e['code'] = $e->getCode();
-            $this->e['message'] = $this->trans('object_deleted_unsuccessfully');
-            
-            return response()->json($this->e, 400);
-        }
-
-        return response()->json($this->e);
     }
 
     public function index(Request $request)

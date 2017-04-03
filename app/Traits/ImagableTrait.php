@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait ImagableTrait
 {
-    public function getImageAttribute($value)
+    public function getImageDefaultAttribute($value)
     {
         return $value ? app()['glide.builder']->getUrl($value) : null;
     }
