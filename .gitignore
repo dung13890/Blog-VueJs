@@ -4,6 +4,7 @@
 /public/vendor
 /public/hot
 /storage/*.key
+/storage/files
 /resources/assets/bower
 /vendor
 /.idea
