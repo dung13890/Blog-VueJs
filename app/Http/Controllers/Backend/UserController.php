@@ -62,6 +62,13 @@ class UserController extends BackendController
         }, 'created');
     }
 
+    public function show($id)
+    {
+        parent::show($id);
+
+        return $this->viewRender();
+    }
+
     public function edit($id)
     {
         parent::edit($id);
