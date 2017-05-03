@@ -1,7 +1,7 @@
 ## About Blog Profile Use Laravel and VueJs
 
 ## Required
-
+xxx
  - Git
  - Composer
  - PHP v.7.x
